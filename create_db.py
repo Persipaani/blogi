@@ -9,10 +9,13 @@ from config import SQLALCHEMY_DATABASE_URI
 from config import SQLALCHEMY_MIGRATE_CONT
 from app import database
 import os.path
-database.create_all()
 
-if not os.path.exists(SQLALCHEMY_MIGRATE_CONT):
-    api.create(SQLALCHEMY_MIGRATE_CONT,"database container")
-    api.version_control(SQLALCHEMY_DATABASE_URI, SQLALCHEMY_MIGRATE_CONT)
-else:
-    api.version_control(SQLALCHEMY_DATABASE_URI, SQLALCHEMY_MIGRATE_CONT, api.version(SQLALCHEMY_MIGRATE_CONT))
+class CreateDB(object):
+    def __init__(self):
+        database.create_all()
+        
+        if not os.path.exists(SQLALCHEMY_MIGRATE_CONT):
+            api.create(SQLALCHEMY_MIGRATE_CONT,"database container")
+            api.version_control(SQLALCHEMY_DATABASE_URI, SQLALCHEMY_MIGRATE_CONT)
+        else:
+            api.version_control(SQLALCHEMY_DATABASE_URI, SQLALCHEMY_MIGRATE_CONT, api.version(SQLALCHEMY_MIGRATE_CONT))

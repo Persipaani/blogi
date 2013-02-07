@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="well">
+  <form action="" method="post" name="changes">
+  {{form.hidden_tag()}}
+  <fieldset>
+  {% if g.user.type==1 %}
+    <legend>Admin options:</legend>
+    <label><h5>Delete these tags:</h5></label>
+    {% for tag in form.tags %}
+    <label class="checkbox inline">
+    {{tag}}{{tag.data}}
+    </label>
+    {% endfor %}
+    <label></label>
+    <label><h5>Users:</h5></label>
+    {% for user in users %}
+  	<label>
+  	ID:{{user.id}} Nick: {{user.nickname}} Type: {{user.type}}
+  	</label>
+    {% endfor %}
+    <label>
+    <h5>Type user ID's to ADD AS Admins:</h5>
+    </label>
+    <label>
+    {{form.newadmins(size=10)}}
+    </label>
+    <label>
+    <h5>Type user ID's to REMOVE AS Admins:</h5>
+    </label>
+    <label>
+    {{form.oldadmins(size=10)}}
+    </label>
+    <button type="submit" class="btn">Save changes</button>
+  {% else %}
+ 	<legend>This page is for admins only. You shouldn't be here.</legend>
+  {% endif %}
+  </fieldset>
+  </form>
+  </div>
+{% endblock %}
+  <div class="span9">
+  </div>

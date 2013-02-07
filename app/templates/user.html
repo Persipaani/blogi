@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{user.nickname}}'s page</h1>
+<div class="well">
+
+{% if user.info!=None %}
+	<p><textarea rows="50" style="margin: 0px; width: 400px; height: 150px;" readonly>
+     {{user.info}}
+    </textarea></p>
+{% else %}
+	<p><textarea rows="50" style="margin: 0px; width: 700px; height: 400px;" readonly>
+     User has not added information about him/herself.
+    </textarea></p>
+{% endif %}
+        
+{% if g.user.id==user.id %}
+    <p><a href="{{url_for("edit")}}" class="btn">Edit</a></p>
+{% endif %}
+        
+{% if user.last_seen %}
+    <p>Last logged in: {{user.last_seen}}</p>
+{% endif %}
+
+</div>
+
+{% for post in posts.items %}
+{% include "post.html" %}
+{% endfor %}
+
+<div class="pagination">
+  <ul>
+  {% if posts.has_next %}
+     <li><a href="{{url_for("user", page = posts.next_num,nickname=user.nickname)}}">Older</a></li>
+    {% else %}
+	<li class="disabled"><a href="#">Older</a></li>
+	{% endif %}
+    
+  	{% if posts.has_prev %}
+    <li><a href="{{ url_for("user", page = posts.prev_num,nickname=user.nickname)}}">Newer</a></li>
+    {% else %}
+    <li class="disabled"><a href="#">Newer</a></li>
+	{% endif %} 
+    
+  </ul>
+</div>
+
+{% endblock %}

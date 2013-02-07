@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Edit post:</h1>
+<div class="well">
+{% if g.user.type==1 %}
+    <form class="form-horizontal" action="" method="post" name="post">
+    {{form.hidden_tag()}}
+    
+      <div class="control-group">
+        <label class="control-label" for="title">Title</label>
+        <div class="controls">
+          {{form.title(size=30,maxlength=100)}}
+          <span class="help-block">Title is required! / max. 100 chars!</span>
+        </div>
+      </div>
+      
+      <div class="control-group">
+        <label class="control-label" for="body">Message</label>
+        <div class="controls">
+          {{form.body(cols=32,rows=7,maxlength=2500,style="margin: 0px; width: 700px; height: 400px;")}}
+          <span class="help-block">max. 2500 chars!</span>
+        </div>
+      </div>
+      
+      <div class="control-group">
+      <label class="control-label" for="body">Tags:</label>
+      	<div class="controls">
+        {% for tag in form.tags %}
+        <label class="checkbox inline">
+        {{tag}}{{tag.data}}
+        </label>
+        {% endfor %}
+    	</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label" for="tags">New Tags:</label>
+        <div class="controls">
+          {{form.newtags(size=24)}}
+          <span class="help-block">Separate with comma(,) max.100 chars / tag</span>
+        </div>
+       </div>
+       
+       <div class="control-group error">
+        <label class="control-label" for="tags">Remove this post:</label>
+        <div class="controls">
+          {{form.delete}}
+          <span class="help-inline">Checking this box REMOVES post for good!</span>
+        </div>
+       </div>
+       
+       <div class="control-group">
+       	<div class="controls">
+       	<button type="submit" class="btn">Save Changes!</button>
+       	</div>
+       </div>
+       
+	</form>
+    {% else %}
+    <legend>This page is for admins only. You shouldn't be here.</legend>
+    {% endif %}
+</div>
+
+{% for error in form.errors %}
+<div class="alert alert-error">
+  	<button type="button" class="close" data-dismiss="alert">&times;</button>
+  	<strong>Error: </strong>Error in the {{error}}
+</div>
+{% endfor %}
+
+{% endblock %}

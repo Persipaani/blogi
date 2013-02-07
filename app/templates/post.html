@@ -1,0 +1,9 @@
+<table class="table table-hover">
+    <tr>
+        <td>
+        <p>{{post.user.nickname}} writes:<p>
+        <p><strong>{{post.title}}</strong></p>
+        <p><a href="{{url_for("message",id=post.id)}}">Read more</a></p>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+{% if g.user.is_authenticated() %}
+<h1>Hello {{g.user.nickname}}!</h1>
+{% else %}
+<h1>Hello Guest!</h1>
+{% endif %}
+{% if g.user.is_authenticated() %}
+<div class="well">
+    <form class="form-horizontal" action="" method="post" name="post">
+    {{form.hidden_tag()}}
+      <div class="control-group">
+        <label class="control-label" for="title">Title</label>
+        <div class="controls">
+          {{form.title(size=30,maxlength=100)}}
+          <span class="help-block">Title is required! / max. 100 chars!</span>
+        </div>
+      </div>
+      
+      <div class="control-group">
+        <label class="control-label" for="body">Message</label>
+        <div class="controls">
+          {{form.body(cols=32,rows=4,maxlength=2500,style="margin: 0px; width: 400px; height: 150px;")}}
+          <span class="help-block">max. 2500 chars!</span>
+        </div>
+      </div>
+      
+      <div class="control-group">
+        <label class="control-label" for="tags">Tags</label>
+        <div class="controls">
+          {{form.tags(size=30)}}
+          <span class="help-block">Separate with comma(,) max.100 chars / tag</span>
+        </div>
+       </div>
+       <div class="control-group">
+       <div class="controls">
+       <button type="submit" class="btn">Post!</button>
+       </div>
+       </div>
+	</form>
+</div>
+
+
+{% for error in form.errors %}
+<div class="alert alert-error">
+  	<button type="button" class="close" data-dismiss="alert">&times;</button>
+  	<strong>Error: </strong>Error in the {{error}}
+</div>
+{% endfor %}
+
+{% endif %}
+     
+{% for post in posts.items %}
+{% include "post.html" %}
+{% endfor %}
+
+<div class="pagination">
+  <ul>
+  {% if posts.has_next %}
+     <li><a href="{{url_for("index", page = posts.next_num)}}">Older</a></li>
+    {% else %}
+	<li class="disabled"><a href="#">Older</a></li>
+	{% endif %}
+    
+  	{% if posts.has_prev %}
+    <li><a href="{{ url_for('index', page = posts.prev_num) }}">Newer</a></li>
+    {% else %}
+    <li class="disabled"><a href="#">Newer</a></li>
+	{% endif %} 
+    
+  </ul>
+</div>
+
+{% endblock %}

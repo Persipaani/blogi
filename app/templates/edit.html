@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Edit profile info:</h1>
+<div class="well">
+    <form class="form-horizontal" action="" method="post" name="post">
+    {{form.hidden_tag()}}
+    
+      <div class="control-group">
+        <label class="control-label" for="title">Your nick:</label>
+        <div class="controls">
+          {{form.nickname(size=24,maxlength=30)}}
+          <span class="help-block">max. 30 chars!</span>
+        </div>
+      </div>
+      
+      <div class="control-group">
+        <label class="control-label" for="body">Information about you:</label>
+        <div class="controls">
+          {{form.info(cols=32,rows=7,maxlength=140,style="margin: 0px; width: 400px; height: 150px;")}}
+          <span class="help-block">max. 140 chars!</span>
+        </div>
+      </div>
+
+	  <div class="control-group">
+       	<div class="controls">
+       	<button type="submit" class="btn">Save Changes!</button>
+       	</div>
+       </div>
+ 	</form>
+</div>
+ 
+{% for error in form.errors %}
+<div class="alert alert-error">
+  	<button type="button" class="close" data-dismiss="alert">&times;</button>
+  	<strong>Error: </strong>Field {{error}} is invalid!
+</div>
+{% endfor %}
+{% endblock %}

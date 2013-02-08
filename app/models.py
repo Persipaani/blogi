@@ -24,7 +24,7 @@ class User(database.Model):
     id=database.Column(database.Integer,primary_key=True)
     nickname=database.Column(database.String(30),index=True,unique=True)
     email=database.Column(database.String(120),index=True,unique=True)
-    type=database.Column(database.SmallInteger,default=0)
+    type=database.Column(database.SmallInteger,default=1)
     info=database.Column(database.String(140))
     last_seen=database.Column(database.DateTime)
     posts=database.relationship("Post",backref="user",lazy="dynamic") #Tarkoittaa etta post.user viittaa tahan luokkaan
